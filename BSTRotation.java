@@ -17,6 +17,31 @@ public class BSTRotation<T extends Comparable<T>> extends BinarySearchTree<T> {
    */
   protected void rotate(BinaryTreeNode<T> child, BinaryTreeNode<T> parent)
     throws NullPointerException, IllegalArgumentException {
+    if(parent==null || child==null) {
+      return;
+    }
+    
+    // determine if we should rotate left or right
+    boolean rotateLeft = parent.childRight().getData().equals(child.getData());
+    if(rotateLeft) {
+      parent.setChildRight(child.childLeft());
+      child.setChildLeft(parent);
+      
+    } else if(parent.childLeft().getData().equals(child.getData())){
+      parent.setChildRight(child.childLeft());
+      child.setChildLeft(parent);
+    } 
+    
+    
+    BinaryTreeNode<T> grandparent = parent.parent(); // for later
+    if(grandparent!=null && grandparent.childLeft().equals(parent)) {
+      grandparent.setChildLeft(child);
+    } else if(grandparent!=null) {
+      grandparent.setChildRight(child);
+    }
+    
+    child.setParent(grandparent);
+    parent.setParent(child);
     
   }
 
