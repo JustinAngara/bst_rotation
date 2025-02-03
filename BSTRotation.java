@@ -26,6 +26,10 @@ public class BSTRotation<T extends Comparable<T>> extends BinarySearchTree<T> {
     boolean rotateLeft = parent.childRight()==child;
     boolean rotateRight = parent.childLeft()==child;
    
+    if((!rotateLeft&&!rotateRight) || child.parent() != parent) {
+      throw new IllegalArgumentException("shit don't work");
+    }
+    
     // block of if statements ensures that we have the correct pointers to the nodes
     if(rotateLeft) {
      
