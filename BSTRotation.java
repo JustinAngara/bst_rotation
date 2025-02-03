@@ -70,7 +70,9 @@ public class BSTRotation<T extends Comparable<T>> extends BinarySearchTree<T> {
   }
 
 
-
+  /*
+   * left rotation tests for root and non root 
+   */
   public boolean test1() {
     BSTRotation<Integer>  tree= new BSTRotation<>();
     
@@ -79,7 +81,7 @@ public class BSTRotation<T extends Comparable<T>> extends BinarySearchTree<T> {
     tree.insert(16);
     tree.insert(13);
     BinaryTreeNode<Integer> parent = tree.root; // Root node (15)
-    BinaryTreeNode<Integer> child = tree.root.childRight();; // Right child (16)
+    BinaryTreeNode<Integer> child = tree.root.childRight(); // Right child (16)
     tree.rotate(child, parent);
     if(tree.root!=child) { // root!=child
      
@@ -93,12 +95,86 @@ public class BSTRotation<T extends Comparable<T>> extends BinarySearchTree<T> {
       System.out.println("failed here");
       return false;
     }
+BSTRotation<Integer>  tree1= new BSTRotation<>();
+    
+    tree1.insert(15);
+    tree1.insert(12);
+    tree1.insert(11);
+    tree1.insert(16);
+    tree1.insert(13);
+    BinaryTreeNode<Integer> parent1 = tree1.root.childLeft(); // Root node (15)
+    BinaryTreeNode<Integer> child1 = parent1.childRight(); // Right child (16)
+    tree1.rotate(child1, parent1);
+    if(!tree1.root.getData().equals(15)) { // root!=child
+     
+      return false;
+    }else if(tree1.root.left != child1) {
+      return false;
+    }else if(tree1.root.left.left != parent1) {
+      System.out.println("failed here");
+      return false;
+    }else if(!tree1.root.left.left.left.getData().equals(11)) {
+      System.out.println("failed here");
+      return false;
+    }
+    return true;
+  }
+  /*
+   * right rotation tests for root and non root 
+   */
+  public boolean test2() {
+    BSTRotation<Integer>  tree= new BSTRotation<>();
+    
+    tree.insert(15);
+    tree.insert(12);
+    tree.insert(16);
+    tree.insert(13);
+    BinaryTreeNode<Integer> parent = tree.root; // Root node (15)
+    BinaryTreeNode<Integer> child = tree.root.childLeft(); // Right child (16)
+    tree.rotate(child, parent);
+    if(tree.root!=child) { // root!=child
+     
+      return false;
+    }else if(tree.root.right != parent) {
+      return false;
+    }else if(!tree.root.right.right.getData().equals(16)) {
+      System.out.println("failed here");
+      return false;
+    }else if(!tree.root.right.left.getData().equals(13)) {
+      System.out.println("failed here");
+      return false;
+    }
+BSTRotation<Integer>  tree1= new BSTRotation<>();
+    
+    tree1.insert(15);
+    tree1.insert(12);
+    tree1.insert(11);
+    tree1.insert(16);
+    tree1.insert(13);
+    BinaryTreeNode<Integer> parent1 = tree1.root.childLeft(); // Root node (15)
+    BinaryTreeNode<Integer> child1 = parent1.childLeft(); // Right child (16)
+    tree1.rotate(child1, parent1);
+    if(!tree1.root.getData().equals(15)) { // root!=child
+     
+      return false;
+    }else if(tree1.root.left != child1) {
+      return false;
+    }else if(tree1.root.left.right != parent1) {
+      System.out.println("failed here");
+      return false;
+    }else if(!tree1.root.left.right.right.getData().equals(13)) {
+      System.out.println("failed here");
+      return false;
+    }
     return true;
   }
   public static void main(String[] args) {
     BSTRotation<Integer>  test= new BSTRotation<>();
     boolean test1 = test.test1();
-    System.out.println("rotate: " + (test1 ? "PASS" : "FAIL"));
+    System.out.println("rotate right: " + (test1 ? "PASS" : "FAIL"));
+    boolean test2 = test.test2();
+    System.out.println("rotate left: " + (test1 ? "PASS" : "FAIL"));
+
 
   }
 }
