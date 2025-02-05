@@ -106,8 +106,8 @@ BSTRotation<Integer>  tree1= new BSTRotation<>();
     tree1.insert(11);
     tree1.insert(16);
     tree1.insert(13);
-    BinaryTreeNode<Integer> parent1 = tree1.root.childLeft(); // Root node (15)
-    BinaryTreeNode<Integer> child1 = parent1.childRight(); // Right child (16)
+    BinaryTreeNode<Integer> parent1 = tree1.root.childLeft(); // Root node (12)
+    BinaryTreeNode<Integer> child1 = parent1.childRight(); // Right child (13)
     tree1.rotate(child1, parent1);
     if(!tree1.root.getData().equals(15)) { // root!=child
      
@@ -134,7 +134,7 @@ BSTRotation<Integer>  tree1= new BSTRotation<>();
     tree.insert(16);
     tree.insert(13);
     BinaryTreeNode<Integer> parent = tree.root; // Root node (15)
-    BinaryTreeNode<Integer> child = tree.root.childLeft(); // Right child (16)
+    BinaryTreeNode<Integer> child = tree.root.childLeft(); // Right child (12)
     tree.rotate(child, parent);
     if(tree.root!=child) { // root!=child
      
@@ -155,8 +155,8 @@ BSTRotation<Integer>  tree1= new BSTRotation<>();
     tree1.insert(11);
     tree1.insert(16);
     tree1.insert(13);
-    BinaryTreeNode<Integer> parent1 = tree1.root.childLeft(); // Root node (15)
-    BinaryTreeNode<Integer> child1 = parent1.childLeft(); // Right child (16)
+    BinaryTreeNode<Integer> parent1 = tree1.root.childLeft(); // Root node (12)
+    BinaryTreeNode<Integer> child1 = parent1.childLeft(); // Right child (11)
     tree1.rotate(child1, parent1);
     if(!tree1.root.getData().equals(15)) { // root!=child
      
@@ -172,12 +172,106 @@ BSTRotation<Integer>  tree1= new BSTRotation<>();
     }
     return true;
   }
+  
+  /*
+   * test rotation with multiple children left and right
+   */
+  public boolean test3() {
+    //right rotation example
+    BSTRotation<Integer>  tree= new BSTRotation<>();
+    
+    tree.insert(15);
+    tree.insert(13);
+    tree.insert(16);
+    tree.insert(14);
+    tree.insert(11);
+    tree.insert(12);
+    BinaryTreeNode<Integer> parent = tree.root; // Root node (15)
+    BinaryTreeNode<Integer> child = tree.root.childLeft(); // Right child (13)
+    tree.rotate(child, parent);
+    if(tree.root!=child) { // root!=child
+     
+      return false;
+    }else if(tree.root.right != parent) {
+      return false;
+    }else if(!tree.root.right.right.getData().equals(16)) {
+      System.out.println("failed here");
+      return false;
+    }else if(!tree.root.right.left.getData().equals(14)) {
+      System.out.println("failed here");
+      return false;
+    }else if(!tree.root.left.right.getData().equals(12)) {
+      System.out.println("failed here");
+      return false;
+    }
+ //left rotation example
+BSTRotation<Integer>  tree1= new BSTRotation<>();
+    
+    tree1.insert(20);
+    tree1.insert(16);
+    tree1.insert(11);
+    tree1.insert(21);
+    tree1.insert(18);
+    tree1.insert(17);
+    tree1.insert(19);
+    BinaryTreeNode<Integer> parent1 = tree1.root.childLeft(); // Root node (16)
+    BinaryTreeNode<Integer> child1 = parent1.childRight(); // Right child (18)
+    tree1.rotate(child1, parent1);
+    if(!tree1.root.getData().equals(20)) { // root!=child
+     
+      return false;
+    }else if(tree1.root.left != child1) {
+      return false;
+    }else if(!tree1.root.left.right.getData().equals(19)) {
+      
+      return false;
+    }else if(tree1.root.left.left != parent1) {
+      System.out.println("failed here");
+      return false;
+    }else if(!tree1.root.left.left.right.getData().equals(17)) {
+      System.out.println("failed here");
+      return false;
+    }else if(!tree1.root.left.left.left.getData().equals(11)) {
+      System.out.println("failed here");
+      return false;
+    }
+    return true;
+  
+  }
+  /*
+   * checking swap of non parent and child
+   */
+  public boolean test4() {
+    
+    BSTRotation<Integer>  tree= new BSTRotation<>();
+    
+    tree.insert(15);
+    tree.insert(13);
+    tree.insert(16);
+    tree.insert(14);
+    tree.insert(11);
+    tree.insert(12);
+    BinaryTreeNode<Integer> parent = tree.root; // Root node (15)
+    BinaryTreeNode<Integer> child = tree.root.left.childRight(); // Right child (14)
+    try {
+    tree.rotate(child, parent);
+    } catch(IllegalArgumentException e) {
+      return true;
+    }
+    
+    return false;
+  }
   public static void main(String[] args) {
     BSTRotation<Integer>  test= new BSTRotation<>();
     boolean test1 = test.test1();
     System.out.println("rotate right: " + (test1 ? "PASS" : "FAIL"));
     boolean test2 = test.test2();
-    System.out.println("rotate left: " + (test1 ? "PASS" : "FAIL"));
+    System.out.println("rotate left: " + (test2 ? "PASS" : "FAIL"));
+    boolean test3 = test.test3();
+    System.out.println("rotate with extra children: " + (test3 ? "PASS" : "FAIL"));
+    boolean test4 = test.test4();
+    System.out.println("rotate non parent and child: " + (test4 ? "PASS" : "FAIL"));
+
 
 
   }
